@@ -27,21 +27,21 @@ ActiveRecord::Schema.define(version: 2020_11_14_222319) do
   create_table "user_orders", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "menu_item_id", null: false
+    t.integer "table_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["menu_item_id"], name: "index_user_orders_on_menu_item_id"
+    t.index ["table_id"], name: "index_user_orders_on_table_id"
     t.index ["user_id"], name: "index_user_orders_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
-    t.integer "table_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["table_id"], name: "index_users_on_table_id"
   end
 
   add_foreign_key "user_orders", "menu_items"
+  add_foreign_key "user_orders", "tables"
   add_foreign_key "user_orders", "users"
-  add_foreign_key "users", "tables"
 end
