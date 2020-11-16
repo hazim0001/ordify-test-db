@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  comment: MyText
+  quantity: 1
+  price: 9.99
+  user_order: one
+  menu_item: one
+
+two:
+  comment: MyText
+  quantity: 1
+  price: 9.99
+  user_order: two
+  menu_item: two

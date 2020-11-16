@@ -8,6 +8,7 @@
 MenuItem.destroy_all
 User.destroy_all
 Table.destroy_all
+
 puts "creating menue items and users"
 tablee = []
 2.times do
@@ -15,10 +16,21 @@ tablee = []
 end
 puts "tables are created #{tablee.sample}"
 10.times do
-  menu_item_new = MenuItem.create(title: Faker::Food.dish, price: rand(100..300))
+  menu_item_new = MenuItem.create!(title: Faker::Food.dish, item_price: rand(10.0..80.0).round(2), description: Faker::Food.description)
   puts "menu ites has been created #{menu_item_new}"
-  user = User.create(name: Faker::Name.name)
+  user = User.create!(name: Faker::Name.name)
   puts "User has been created #{user}"
-  UserOrder.create!(user: user, menu_item: menu_item_new, table: tablee.sample)
+  # byebug
+  random_number = rand(1..5)
+  new_order = UserOrder.create!(user: user, table: tablee.sample)
+  order = OrderItem.create!(
+    menu_item: menu_item_new,
+    comment: Faker::Restaurant.type,
+    quantity: random_number,
+    price: menu_item_new.item_price * random_number,
+    user_order: new_order
+  )
+  new_order.total_price = order.price
+  new_order.save!
 end
 puts "doneee"

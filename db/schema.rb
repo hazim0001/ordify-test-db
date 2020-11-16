@@ -10,13 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_14_222319) do
+ActiveRecord::Schema.define(version: 2020_11_16_002749) do
 
   create_table "menu_items", force: :cascade do |t|
     t.string "title"
-    t.integer "price"
+    t.float "item_price"
+    t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "order_items", force: :cascade do |t|
+    t.text "comment"
+    t.integer "quantity"
+    t.float "price"
+    t.integer "user_order_id", null: false
+    t.integer "menu_item_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["menu_item_id"], name: "index_order_items_on_menu_item_id"
+    t.index ["user_order_id"], name: "index_order_items_on_user_order_id"
   end
 
   create_table "tables", force: :cascade do |t|
@@ -26,11 +39,10 @@ ActiveRecord::Schema.define(version: 2020_11_14_222319) do
 
   create_table "user_orders", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.integer "menu_item_id", null: false
+    t.float "total_price", default: 0.0
     t.integer "table_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["menu_item_id"], name: "index_user_orders_on_menu_item_id"
     t.index ["table_id"], name: "index_user_orders_on_table_id"
     t.index ["user_id"], name: "index_user_orders_on_user_id"
   end
@@ -41,7 +53,8 @@ ActiveRecord::Schema.define(version: 2020_11_14_222319) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "user_orders", "menu_items"
+  add_foreign_key "order_items", "menu_items"
+  add_foreign_key "order_items", "user_orders"
   add_foreign_key "user_orders", "tables"
   add_foreign_key "user_orders", "users"
 end
