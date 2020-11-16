@@ -10,13 +10,16 @@ User.destroy_all
 Table.destroy_all
 
 puts "creating menue items and users"
+category_options = %w[sushi beef chicken].sample
 tablee = []
-2.times do
+categoryy = []
+3.times do
   tablee << Table.create!
+  categoryy << Category.create!(title: category_options)
 end
 puts "tables are created #{tablee.sample}"
 10.times do
-  menu_item_new = MenuItem.create!(title: Faker::Food.dish, item_price: rand(10.0..80.0).round(2), description: Faker::Food.description)
+  menu_item_new = MenuItem.create!(title: Faker::Food.dish, item_price: rand(10.0..80.0).round(2), description: Faker::Food.description, category: categoryy.sample)
   puts "menu ites has been created #{menu_item_new}"
   user = User.create!(name: Faker::Name.name)
   puts "User has been created #{user}"
