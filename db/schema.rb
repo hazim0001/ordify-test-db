@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_16_002749) do
+ActiveRecord::Schema.define(version: 2020_11_16_041755) do
 
   create_table "menu_items", force: :cascade do |t|
     t.string "title"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 2020_11_16_002749) do
     t.integer "table_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "dispatched", default: false
     t.index ["table_id"], name: "index_user_orders_on_table_id"
     t.index ["user_id"], name: "index_user_orders_on_user_id"
   end
