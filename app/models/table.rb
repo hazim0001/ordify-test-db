@@ -1,7 +1,7 @@
 class Table < ApplicationRecord
-  has_many :user_orders
-  has_many :order_items, through: :user_orders
-  has_many :menu_items, through: :user_orders
-  has_many :users, through: :user_orders
+  has_many :orders
+  has_many :line_items, through: :orders
+  has_many :menu_items, through: :line_items
+  has_many :customers, through: :orders
   belongs_to :restaurant
 end

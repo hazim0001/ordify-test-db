@@ -1,7 +1,9 @@
 class MenuItem < ApplicationRecord
-  has_many :order_items
-  has_many :user_orders, through: :order_items
-  has_many :users, through: :user_orders
-  has_many :tables, through: :user_orders
+  has_many :line_items
+  has_many :orders, through: :line_items
+  has_many :customers, through: :rders
+  has_many :tables, through: :orders
+  has_many :menus
+  has_many :restaurants, through: :menus
   belongs_to :category
 end
