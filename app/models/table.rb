@@ -3,4 +3,5 @@ class Table < ApplicationRecord
   has_many :order_items, through: :user_orders
   has_many :menu_items, through: :user_orders
   has_many :users, through: :user_orders
+  belongs_to :restaurant
 end
