@@ -14,7 +14,7 @@ Restaurant.destroy_all
 Menu.destroy_all
 Category.destroy_all
 
-puts "db is now clean......Seeding in progress"
+puts 'db is now clean......Seeding in progress'
 
 rest_one = Restaurant.create!(name: Faker::Restaurant.name, address: Faker::Address.street_address, cusine: Faker::Restaurant.type)
 
@@ -27,7 +27,7 @@ categoryy = []
   Table.create!(name: Faker::Artist.name, restaurant: rest_one)
 end
 
-puts "Categories have been created"
+puts 'Categories have been created'
 
 menu_items_array = []
 
@@ -38,7 +38,6 @@ menu_items_array = []
   puts "#{menu_item_new.title} has been created"
 end
 
-total = []
 5.times do
   cust = Customer.create!(name: Faker::Name.name)
   puts "#{cust.name} has been created"
@@ -49,10 +48,8 @@ total = []
     puts "#{line} has been created an updated"
   end
   # byebug
-  LineItem.where(order: order.id).each do |item|
-    total << item.total
-  end
-  order.update!(total_price: total.sum)
+  total = LineItem.where(order: order.id).sum(:total)
+  order.update!(total_price: total)
 end
 
 # puts "tables are created #{tablee.sample}"
