@@ -5,4 +5,8 @@ class Restaurant < ApplicationRecord
   has_many :line_items, through: :menu_items
   has_many :orders, through: :line_items
   has_many :customers, through: :orders
+
+  validates :name, presence: true
+  validates :address, presence: true
+  validates :cusine, presence: true
 end
