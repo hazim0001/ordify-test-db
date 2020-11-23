@@ -5,7 +5,7 @@ class CreateOrders < ActiveRecord::Migration[6.0]
       t.boolean :dispatched, default: false
       t.references :table, null: false, foreign_key: true
       t.string :user_number
-      t.boolean :confirmed, default: false
+      t.boolean :sent, default: false
 
       t.timestamps
     end
