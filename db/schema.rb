@@ -56,20 +56,13 @@ ActiveRecord::Schema.define(version: 2020_11_23_181139) do
     t.string "title"
     t.float "item_price", default: 0.0
     t.text "description"
+    t.integer "restaurant_id", null: false
     t.integer "category_id", null: false
     t.boolean "active", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["category_id"], name: "index_menu_items_on_category_id"
-  end
-
-  create_table "menus", force: :cascade do |t|
-    t.integer "restaurant_id", null: false
-    t.integer "menu_item_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["menu_item_id"], name: "index_menus_on_menu_item_id"
-    t.index ["restaurant_id"], name: "index_menus_on_restaurant_id"
+    t.index ["restaurant_id"], name: "index_menu_items_on_restaurant_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -104,8 +97,7 @@ ActiveRecord::Schema.define(version: 2020_11_23_181139) do
   add_foreign_key "line_items", "menu_items"
   add_foreign_key "line_items", "orders"
   add_foreign_key "menu_items", "categories"
-  add_foreign_key "menus", "menu_items"
-  add_foreign_key "menus", "restaurants"
+  add_foreign_key "menu_items", "restaurants"
   add_foreign_key "orders", "tables"
   add_foreign_key "restaurants", "cusines"
   add_foreign_key "tables", "restaurants"
