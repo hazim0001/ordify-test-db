@@ -6,4 +6,5 @@ class Table < ApplicationRecord
   belongs_to :restaurant
 
   validates :name, presence: true, format: { with: /^(table) (\d|\w*)/i } # to be a hint when creating a table
+  # uniqness scope restaurant
 end
