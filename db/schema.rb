@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_21_211103) do
+ActiveRecord::Schema.define(version: 2020_11_23_173948) do
 
   create_table "categories", force: :cascade do |t|
     t.string "title"
@@ -18,9 +18,8 @@ ActiveRecord::Schema.define(version: 2020_11_21_211103) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "customers", force: :cascade do |t|
+  create_table "cusines", force: :cascade do |t|
     t.string "name"
-    t.boolean "active", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -28,7 +27,7 @@ ActiveRecord::Schema.define(version: 2020_11_21_211103) do
   create_table "line_items", force: :cascade do |t|
     t.text "comment"
     t.integer "quantity"
-    t.float "total"
+    t.float "total", default: 0.0
     t.integer "order_id", null: false
     t.integer "menu_item_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -39,9 +38,10 @@ ActiveRecord::Schema.define(version: 2020_11_21_211103) do
 
   create_table "menu_items", force: :cascade do |t|
     t.string "title"
-    t.float "sub_total"
+    t.float "item_price", default: 0.0
     t.text "description"
     t.integer "category_id", null: false
+    t.boolean "active", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["category_id"], name: "index_menu_items_on_category_id"
@@ -57,22 +57,23 @@ ActiveRecord::Schema.define(version: 2020_11_21_211103) do
   end
 
   create_table "orders", force: :cascade do |t|
-    t.integer "customer_id", null: false
     t.float "total_price", default: 0.0
     t.boolean "dispatched", default: false
     t.integer "table_id", null: false
+    t.string "user_number"
+    t.boolean "confirmed", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["customer_id"], name: "index_orders_on_customer_id"
     t.index ["table_id"], name: "index_orders_on_table_id"
   end
 
   create_table "restaurants", force: :cascade do |t|
     t.string "name"
     t.string "address"
-    t.string "cusine"
+    t.integer "cusine_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["cusine_id"], name: "index_restaurants_on_cusine_id"
   end
 
   create_table "tables", force: :cascade do |t|
@@ -88,7 +89,7 @@ ActiveRecord::Schema.define(version: 2020_11_21_211103) do
   add_foreign_key "menu_items", "categories"
   add_foreign_key "menus", "menu_items"
   add_foreign_key "menus", "restaurants"
-  add_foreign_key "orders", "customers"
   add_foreign_key "orders", "tables"
+  add_foreign_key "restaurants", "cusines"
   add_foreign_key "tables", "restaurants"
 end
